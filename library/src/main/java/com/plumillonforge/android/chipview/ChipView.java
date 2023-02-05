@@ -37,6 +37,7 @@ import java.util.Observer;
 public class ChipView extends ViewGroup implements Observer {
     private ChipViewAdapter mAdapter;
     private OnChipClickListener mListener;
+    private OnChipLongClickListener mLongListener;
 
     // Data
     private List<Integer> mLineHeightList;
@@ -177,6 +178,14 @@ public class ChipView extends ViewGroup implements Observer {
                         }
                     });
                 }
+                if(mLongListener!=null){
+                   childView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public void onLongClick(View v) {
+                            mListener.onChipLongClick(chip);
+                        }
+                    });
+                }
             }
         }
     }
@@ -314,6 +323,9 @@ public class ChipView extends ViewGroup implements Observer {
      */
     public void setOnChipClickListener(OnChipClickListener listener) {
         mListener = listener;
+    }
+    public void setOnChipLongClickListener(OnChipLongClickListener listener) {
+        mLongListener = listener;
     }
 
     public boolean isToleratingDuplicate() {
